@@ -2,7 +2,7 @@ name: run twitter-scrape.py
 
 on:
   schedule:
-    - cron: '0 */1 * * *' # At 00:00 on Monday
+    - cron: '5 4 1 * *' # At 04:05 on 1st of each month, edited so to save our precious minutes b4 actual deployment
 
 jobs:
   build:
