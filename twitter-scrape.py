@@ -47,34 +47,34 @@ def scrape_tweets(url):
 
 
 if __name__=="__main__":
-	driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    users = ['ugc_india', 'ncert', 'NTA_Exams', 'EduMinOfIndia']
+    data = []
+    for user in users:
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        user_url = f'https://twitter.com/{user}'
+        driver.get(user_url)
 
-	users = ['ugc_india', 'ncert', 'NTA_Exams', 'EduMinOfIndia']
-	for user in users:
-		user_url = f'https://twitter.com/{user}'
-		driver.get(user_url)
+        time.sleep(3)
 
-		time.sleep(3)
+        body = driver.find_element(By.CSS_SELECTOR, 'body')
+        body.send_keys(Keys.PAGE_DOWN)
+        time.sleep(1)
+        body.send_keys(Keys.PAGE_DOWN)
+        time.sleep(2)
 
-		body = driver.find_element(By.CSS_SELECTOR, 'body')
-		body.send_keys(Keys.PAGE_DOWN)
-		time.sleep(1)
-		body.send_keys(Keys.PAGE_DOWN)
-		time.sleep(2)
+        tweets = driver.find_elements(By.XPATH, '//article[@role="article"]')
 
-		tweets = driver.find_elements(By.XPATH, '//article[@role="article"]')
+        tweet_links = []
+        for tweet in tweets[:3]:
+            link = tweet.find_element(By.XPATH, './/time/parent::a').get_attribute('href')
+            tweet_links.append(link)
 
-		tweet_links = []
-		for tweet in tweets[:3]:
-			link = tweet.find_element(By.XPATH, './/time/parent::a').get_attribute('href')
-			tweet_links.append(link)
-
-		data = []
-		for linkt in tweet_links:
-			text,time_stamp,user = scrape_tweets(linkt)
-			row = {'user': user, 'text': text, 'time': time_stamp, 'link': linkt}
-			data.append(row)
-		df = pd.DataFrame(data)
-		driver.quit()
-		df.to_csv('./tweets.csv')
-
+        
+        for linkt in tweet_links:
+            text,time_stamp,user = scrape_tweets(linkt)
+            row = {'user': user, 'text': text, 'time': time_stamp, 'link': linkt}
+            data.append(row)
+    df = pd.DataFrame(data)
+    driver.quit()
+    df.to_csv('./tweets.csv')
+    
