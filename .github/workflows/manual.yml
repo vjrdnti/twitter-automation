@@ -45,5 +45,6 @@ jobs:
           
       - name: push changes
         run: |
+          git commit -m 'automated commit'
           git push https://${{ secrets.PAT_TOKEN }}@github.com/vjrdnti/twitter-automation.git HEAD:main
 
