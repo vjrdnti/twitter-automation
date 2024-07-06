@@ -47,7 +47,7 @@ def scrape_tweets(url):
 
 
 if __name__=="__main__":
-    users = ['ugc_india', 'ncert', 'NTA_Exams', 'EduMinOfIndia']
+    users = ['ugc_india']#, 'ncert', 'NTA_Exams', 'EduMinOfIndia']
     data = []
     for user in users:
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
