@@ -63,4 +63,4 @@ jobs:
         
       - name: push changes
         run: |
-          git push https://${{ secrets.PAT_TOKEN }}@github.com/vjrdnti/twitter-automation.git HEAD:main
+          git push https://${{ secrets.PAT_TOKEN }}@github.com/vjrdnti/twitter-automation.git HEAD:test
