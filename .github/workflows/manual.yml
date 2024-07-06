@@ -17,6 +17,12 @@ jobs:
         with:
           python-version: '3.10' # install the python version needed
 
+      - name: install git-lfs
+        run: |
+          sudo apt-get install git-lfs
+          git lfs install
+          git lfs pull
+          
       - name: install dependencies
         run: |
           sudo apt-get install ./google-chrome.deb
