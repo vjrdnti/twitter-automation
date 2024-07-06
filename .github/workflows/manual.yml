@@ -19,7 +19,6 @@ jobs:
 
       - name: install git-lfs
         run: |
-          sudo apt-get install git-lfs
           git lfs install
           git lfs pull
           
@@ -45,6 +44,7 @@ jobs:
           
       - name: push changes
         run: |
+          git push
           git commit -m 'automated commit'
           git push https://${{ secrets.PAT_TOKEN }}@github.com/vjrdnti/twitter-automation.git HEAD:main
 
