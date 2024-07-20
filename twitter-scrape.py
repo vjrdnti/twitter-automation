@@ -17,7 +17,7 @@ options.add_argument('--disable-dev-shm-usage')
 
 def scrape_tweets(url):
     # Open the Twitter account page
-    driver2 = webdriver.Firefox(options=options)
+    driver2 = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver2.get(url)
     i=14
     user = ""
@@ -50,7 +50,7 @@ if __name__=="__main__":
     users = ['ugc_india']#, 'ncert', 'NTA_Exams', 'EduMinOfIndia']
     data = []
     for user in users:
-        driver = webdriver.Firefox(options=options)
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
         user_url = f'https://twitter.com/{user}'
         driver.get(user_url)
 
