@@ -3,27 +3,28 @@ name: run twitter-scrape.py manually
 on: workflow_dispatch
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
+
     steps:
-
-      - name: checkout repo content
-        uses: actions/checkout@v2 # checkout the repository content to github runner
-
-      - name: setup python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10' # install the python version needed
-          
-      - name: Set up geckodriver
-        uses: mozilla/geckodriver-action@v1.1.0
-        with:
-          version: 'latest'
+      - name: Checkout repository
+        uses: actions/checkout@v2
   
-      - name: Set up Firefox
-        uses: actions-rs/install@v0.1.1
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          package: firefox
+          python-version: '3.10'  # You can specify the version you need
+  
+  
+      - name: Download and install geckodriver
+        run: |
+          GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r '.tag_name')
+          wget "https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
+          tar -xzf "geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
+          sudo mv geckodriver /usr/local/bin/
+    
+      - name: Set up Firefox
+      - uses: browser-actions/setup-firefox@v1
 
 
       - name: install python packages
